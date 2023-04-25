@@ -21,36 +21,11 @@ namespace Minesweeper.UnitTests
 
             _game = new GameProcessor(_boolField);
         }
-
-
-/*        [Test]
-        public void T1_Open_WhenOpenCellIfGameStateIsNotActive_ReturnsException() //Negative Scenario, pending for removal.
-        {
-            // Precondition
-            var boolField = new bool[2, 2];
-
-            var game = new GameProcessor(boolField);
-
-            game.Open(0, 0);
-
-            // Assert
-            Assert.Throws<InvalidOperationException>(() => game.Open(1, 1));
-        }*/
         
         [Test]
         public void T1_Open_WhenCalledWithMine_ReturnsLose()
-        {
-            // Precondition
-            /*var boolField = new bool[,]
-            { 
-                { false, false},
-                { false, true}
-            };
-
-            var game = new GameProcessor(boolField);*/
-
-            // Action
-           
+        {         
+            //Action
             var result0 = _game.Open(0, 1);
 
             // Assert
@@ -59,15 +34,6 @@ namespace Minesweeper.UnitTests
         [Test]
         public void T2_Open_WhenAllNonMineCellsAreOpened_ReturnsWin()
         {
-/*            // Precondition
-            var boolField = new bool[,]
-            {
-                { false, false},
-                { true, false}
-            };
-
-            var game = new GameProcessor(boolField);*/
-
             // Action
             var result1 = _game.Open(0, 0);
             result1 = _game.Open(1,0);
@@ -80,15 +46,6 @@ namespace Minesweeper.UnitTests
         [Test]
         public void T3_Open_WhenCalledWithNoMine_ReturnsActive()
         {
-            // Precondition
-/*            var boolField = new bool[,]
-            {
-                { false, false},
-                { true, false}
-            };
-
-            var game = new GameProcessor(boolField);*/
-
             // Action
             var result2 = _game.Open(1, 1);
             
