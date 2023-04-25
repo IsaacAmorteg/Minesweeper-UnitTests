@@ -78,5 +78,44 @@ namespace Minesweeper.UnitTests
             }));
         }
 
+        [Test]
+        public void T5_Open_WhenCalledWithNoMineAndOneMineNeighbor_SetMineNeighborCountToOne()
+        {
+            //Precondition
+            _boolField = new bool[,]
+             {
+                { false, false, false},
+                { false, true, false},
+                { false, false, false }
+             };
+
+            _game = new GameProcessor(_boolField);
+
+            //Action
+            _game.Open(0, 0);
+
+            //Assert
+            Assert.That(_game.GetCurrentField()[0, 0], Is.EqualTo(PointState.Neighbors1));          
+        }
+
+        [Test]
+        public void T6_Open_WhenCalledWithNoMineAndMultipleMineNeighbor_SetMineNeighborCountToCorrectValue()
+        {
+            //Precondition
+            _boolField = new bool[,]
+             {
+                { true, false, true},
+                { false, false, false},
+                { true, false, true}
+             };
+
+            _game = new GameProcessor(_boolField);
+
+            //Action
+            _game.Open(1, 1);
+
+            //Assert
+            Assert.That(_game.GetCurrentField()[1, 1], Is.EqualTo(PointState.Neighbors4));
+        }
     }
 }
