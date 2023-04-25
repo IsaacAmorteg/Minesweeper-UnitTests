@@ -26,31 +26,56 @@ namespace Minesweeper.UnitTests
         public void T1_Open_WhenCalledWithMine_ReturnsLose()
         {         
             //Action
-            var result0 = _game.Open(0, 1);
+            var result = _game.Open(0, 1);
 
             // Assert
-            Assert.That(result0, Is.EqualTo(GameState.Lose));
+            Assert.That(result, Is.EqualTo(GameState.Lose));
         }
         [Test]
         public void T2_Open_WhenAllNonMineCellsAreOpened_ReturnsWin()
         {
             // Action
-            var result1 = _game.Open(0, 0);
-            result1 = _game.Open(1,0);
-            result1 = _game.Open(1, 1);
+            var result = _game.Open(0, 0);
+            result = _game.Open(1,0);
+            result = _game.Open(1, 1);
 
             // Assert
-            Assert.That(result1, Is.EqualTo(GameState.Win));
+            Assert.That(result, Is.EqualTo(GameState.Win));
         }
 
         [Test]
         public void T3_Open_WhenCalledWithNoMine_ReturnsActive()
         {
             // Action
-            var result2 = _game.Open(1, 1);
+            var result = _game.Open(1, 1);
             
             // Assert
-            Assert.That(result2, Is.EqualTo(GameState.Active));
+            Assert.That(result, Is.EqualTo(GameState.Active));
+        }
+
+        [Test]
+        public void T4_Open_WhenCalledWithNoMineAndNoMineNeighbors_OpensAllSurroundingCells()
+        {
+            //Precondition
+            _boolField = new bool[,]
+             {
+                { false, false, false},
+                { false, false, false},
+                { false, false, false }
+             };
+
+            _game = new GameProcessor(_boolField);
+
+            // Action
+            _game.Open(0, 0);
+
+            // Assert
+            Assert.That(_game.GetCurrentField(), Is.EqualTo(new PointState[,]
+            {
+                {PointState.Neighbors0, PointState.Neighbors0, PointState.Neighbors0},
+                {PointState.Neighbors0, PointState.Neighbors0, PointState.Neighbors0},
+                {PointState.Neighbors0, PointState.Neighbors0, PointState.Neighbors0}
+            }));
         }
 
     }
