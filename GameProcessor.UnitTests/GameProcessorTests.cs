@@ -1,14 +1,22 @@
 using NUnit.Framework;
+using Minesweeper.Core;
+using Minesweeper.Core.Enums;
 
-namespace GameProcessor.UnitTests
+namespace Minesweeper.UnitTests
 {
     public class GameProcessorTests
     {
-
         [Test]
-        public void Test1()
+        public void Open_WhenCalledWithMine_ReturnsLose()
         {
-            Assert.Pass();
+            // Arrange
+                       
+
+            // Act
+            
+
+            // Assert
+            
         }
     }
 }
