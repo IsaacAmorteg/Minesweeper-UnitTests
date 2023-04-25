@@ -7,16 +7,22 @@ namespace Minesweeper.UnitTests
     public class GameProcessorTests
     {
         [Test]
-        public void Open_WhenCalledWithMine_ReturnsLose()
+        public void T1_Open_WhenCalledWithMine_ReturnsLose()
         {
-            // Arrange
-                       
+            // Precondition
+            var boolField = new bool[,]
+            { 
+                { false, false},
+                { false, true}
+            };
 
-            // Act
-            
+            var game = new GameProcessor(boolField);
+
+            // Action
+            var result = game.Open(1, 1);
 
             // Assert
-            
+            Assert.That(result, Is.EqualTo(GameState.Lose));
         }
     }
 }
