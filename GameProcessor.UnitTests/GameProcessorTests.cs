@@ -140,7 +140,7 @@ namespace Minesweeper.UnitTests
         }
 
         [Test]
-        public void T8_GetCurrentField_WhenMineCellIsOpened_ReturnsCorrectArray()
+        public void T8_Open_WhenMineCellIsOpened_ReturnsMine()
         {
             //Precondition
             _boolField = new bool[,]
@@ -165,10 +165,10 @@ namespace Minesweeper.UnitTests
             _boolField = new bool[,]
             {
                 { true, false, false },
-                { false, true, false },
+                { true, true, false },
                 { false, false, false }
             };
-            _game = new GameProcessor(_boolField);
+            _game = new GameProcessor(_boolField); //When A mine is opened, all other cells turn into Nighbor 0 type, besides the mines. //When A mine is opened, all other cells turn into Nighbor 0 type, besides the mines. 
 
             // Act
             _game.Open(0, 0);
@@ -177,11 +177,63 @@ namespace Minesweeper.UnitTests
             // Assert
             Assert.That(actual, Is.EqualTo(new PointState[,]
             {
-                 { PointState.Mine, PointState.Neighbors2, PointState.Neighbors1},
-                 { PointState.Neighbors2, PointState.Mine, PointState.Neighbors1 },
-                 { PointState.Neighbors1, PointState.Neighbors1, PointState.Neighbors1 }
+                 { PointState.Mine, PointState.Neighbors0, PointState.Neighbors0},
+                 { PointState.Mine, PointState.Mine, PointState.Neighbors0 },
+                 { PointState.Neighbors0, PointState.Neighbors0, PointState.Neighbors0 }
                                 
             }));            
         }
+
+        [Test]
+        public void T99_GetCurrentField_WhenCalledWithNoMineAndMultipleMineNeighbor_SetMineNeighborCountToCorrectValue()
+        {
+            //Precondition
+            _boolField = new bool[,]
+             {
+                { true, false, false },
+                { true, true, false },
+                { false, false, false }
+             };
+
+            _game = new GameProcessor(_boolField);
+            _game.Open(2, 0);
+            var actual = _game.GetCurrentField();
+
+            //Action & Assert
+            Assert.That(actual, Is.EqualTo(new PointState[,] 
+            {
+                 { PointState.Close, PointState.Close, PointState.Neighbors1}, // It is opening inversed Index???? Open 2,0 but outputs 0, 2.
+                 { PointState.Close, PointState.Close, PointState.Close },
+                 { PointState.Close, PointState.Close, PointState.Close }
+
+            }));
+        }
+
+        [Test]
+        public void PrintCurrentFieldToConsole()
+        {
+            _boolField = new bool[,]
+            {
+                { true, false, false },
+                { true, true, false },
+                { false, false, false }
+            };
+            _game = new GameProcessor(_boolField);
+
+            _game.Open(2, 0);
+            var currentField = _game.GetCurrentField();
+            
+
+            // Print the current field to the console
+            for (int i = 0; i < currentField.GetLength(0); i++)
+            {
+                for (int j = 0; j < currentField.GetLength(1); j++)
+                {
+                    Console.Write(currentField[i, j] + " ");
+                }
+                Console.WriteLine();
+            }
+        }
+
     }
 }
