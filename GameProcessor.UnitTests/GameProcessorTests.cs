@@ -177,9 +177,9 @@ namespace Minesweeper.UnitTests
             // Assert
             Assert.That(actual, Is.EqualTo(new PointState[,]
             {
-                 { PointState.Mine, PointState.Neighbors2, PointState.Neighbors1},
-                 { PointState.Neighbors2, PointState.Mine, PointState.Neighbors1 },
-                 { PointState.Neighbors1, PointState.Neighbors1, PointState.Neighbors1 }
+                 { PointState.Mine, PointState.Neighbors0, PointState.Neighbors0},
+                 { PointState.Neighbors0, PointState.Mine, PointState.Neighbors0 },
+                 { PointState.Neighbors0, PointState.Neighbors0, PointState.Neighbors0 }
                                 
             }));            
         }
