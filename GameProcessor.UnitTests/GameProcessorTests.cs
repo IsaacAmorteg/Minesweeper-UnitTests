@@ -140,7 +140,7 @@ namespace Minesweeper.UnitTests
         }
 
         [Test]
-        public void T8_GetCurrentField_WhenMineCellIsOpened_ReturnsCorrectArray22()
+        public void T8_GetCurrentField_WhenMineCellIsOpened_ReturnsCorrectArray()
         {
             //Precondition
             _boolField = new bool[,]
@@ -158,5 +158,30 @@ namespace Minesweeper.UnitTests
 
         }
 
+        [Test]
+        public void T9_ErrorTest_GetCurrentField_WhenMineCellIsOpened_ReturnsCorrectArray()
+        {
+            // Preconditions
+            _boolField = new bool[,]
+            {
+                { true, false, false },
+                { false, true, false },
+                { false, false, false }
+            };
+            _game = new GameProcessor(_boolField);
+
+            // Act
+            _game.Open(0, 0);
+            var actual = _game.GetCurrentField();
+
+            // Assert
+            Assert.That(actual, Is.EqualTo(new PointState[,]
+            {
+                 { PointState.Mine, PointState.Neighbors2, PointState.Neighbors1},
+                 { PointState.Neighbors2, PointState.Mine, PointState.Neighbors1 },
+                 { PointState.Neighbors1, PointState.Neighbors1, PointState.Neighbors1 }
+                                
+            }));            
+        }
     }
 }
